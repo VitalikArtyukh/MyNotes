@@ -2,12 +2,12 @@
 
 namespace MyNotes.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class DetailedPage : ContentPage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainPage"/> class.
+        /// Initializes a new instance of the <see cref="DetailedPage"/> class.
         /// </summary>
-        public MainPage()
+        public DetailedPage()
         {
             InitializeComponent();
         }

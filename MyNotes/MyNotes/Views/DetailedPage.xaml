@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MyNotes.Controls"
+             x:Class="MyNotes.Views.DetailedPage"
+             Title="{Binding Note.Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding DeleteNoteCommand}" Name="DeleteMenuItem" Text="Видалити"/>
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout Margin="15" VerticalOptions="FillAndExpand">
+            <Label Text="Заголовок"/>
+            <controls:FlatEntry Text="{Binding Note.Title}"/>
+            <Label Text="Текст нотатки"/>
+            <controls:FlatEditor Text="{Binding Note.Text}" VerticalOptions="FillAndExpand" />
+            <Label Text="{Binding Note.UpdateDate, StringFormat='Дата створення: {0}'}"/>
+        </StackLayout>
+        <Button Text="Зберегти" Command="{Binding SaveNoteCommand}" Style="{StaticResource ButtonStyle}"/>
+    </StackLayout>
+</ContentPage>

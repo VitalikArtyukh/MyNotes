@@ -1,36 +1,48 @@
 ﻿using Prism;
 using Prism.Ioc;
-using MyNotes.ViewModels;
 using MyNotes.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
+using MyNotes.Services;
+using MyNotes.Models;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyNotes
 {
     public partial class App : PrismApplication
     {
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
         public App() : this(null) { }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Called when the PrismApplication has completed it's initialization process.
+        /// </summary>
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Used to register types with the container that will be used by your application.
+        /// </summary>
+        /// <param name="containerRegistry"></param>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            #region Types      
+            containerRegistry.RegisterSingleton<INotesManager<Note>, NotesManager<Note>>();
+            containerRegistry.RegisterSingleton<IRepository<Note>, NotesRepository<Note>>();
+            #endregion
+
+            #region Navigation   
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<DetailedPage>();
+            #endregion
         }
     }
 }
